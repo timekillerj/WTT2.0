@@ -1,0 +1,4 @@
+dnspython==2.6.1
+motor==3.5.1
+pymongo==4.8.0
+tornado==6.4.1

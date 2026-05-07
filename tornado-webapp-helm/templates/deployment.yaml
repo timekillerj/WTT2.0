@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-tornado-app
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-tornado-app
+  template:
+    metadata:
+      labels:
+        app: my-tornado-app
+    spec:
+      serviceAccountName: tornado-app-sa
+      containers:
+      - name: tornado-app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8888
+        env:
+        - name: MONGO_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: MONGO_HOST
+        - name: MONGO_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: MONGO_USER
+        - name: MONGO_PASS
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: MONGO_PASS
+        securityContext:
+          privileged: true
