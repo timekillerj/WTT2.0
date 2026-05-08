@@ -5,5 +5,5 @@ variable "region" {
 }
 
 variable "s3_bucket_name" {
-  default = "techtask-readable-mongo-backups"
+  default = "techtask-public-mongo-backups"
 }
