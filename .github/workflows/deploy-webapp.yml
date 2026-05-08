@@ -18,10 +18,14 @@ permissions:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: tornado-webapp
-  EKS_CLUSTER_NAME: YOUR_EKS_CLUSTER_NAME
+  EKS_CLUSTER_NAME: wiz-task-eks
   HELM_RELEASE: tornado-webapp
   HELM_CHART_PATH: ./tornado-webapp-helm
   K8S_NAMESPACE: default
+  MOGOHOST: "aXAtMTAtMC0yLTE3Ny5lYzIuaW50ZXJuYWw="
+  MOGOUSER: "YWRtaW4="
+  MONGOPASS: "YWRtaW5wYXNzd29yZA=="
+
 
 jobs:
   build-push-deploy:
@@ -70,3 +74,7 @@ jobs:
             --create-namespace \
             --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY \
             --set image.tag=$IMAGE_TAG
+            --set mongoSecret.mongoHost: $MONGOHOST
+            --set mongoSecret.mongoUser: $MONGOUSER
+            --set mongoSecret.mongoPass: $MONGOPASS
+
