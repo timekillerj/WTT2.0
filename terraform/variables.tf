@@ -21,9 +21,5 @@ variable "aws_region" {
 }
 
 variable "eks_cluster_name" {
-  description = "Your EKS cluster name"
-}
-
-variable "ecr_repo_arn" {
-  description = "ARN of your ECR repo"
+  default = "wiz-task-eks"
 }

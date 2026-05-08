@@ -30,6 +30,10 @@ output "s3_bucket_url" {
   value = "https://${aws_s3_bucket.db_backups.bucket}.s3.amazonaws.com"
 }
 
+output "ecr_repo_arn" {
+  value       = aws_ecr_repository.tornado_webapp.arn
+}
+
 output "ecr_repository_url" {
   value = aws_ecr_repository.tornado_webapp.repository_url
 }

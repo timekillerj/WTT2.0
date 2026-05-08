@@ -12,7 +12,7 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  cluster_name   = "wiz-task-eks"
+  cluster_name   = var.eks_cluster_name
   instance_type  = "t3.small"
   s3_bucket_name = var.s3_bucket_name
 

@@ -57,7 +57,7 @@ resource "aws_iam_policy" "ecr_push" {
           "ecr:InitiateLayerUpload",
           "ecr:PutImage"
         ]
-        Resource = var.ecr_repo_arn
+        Resource = aws_ecr_repository.tornado_webapp.arn
       }
     ]
   })
