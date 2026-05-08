@@ -54,6 +54,15 @@ resource "aws_s3_bucket" "db_backups" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "mongo_backups" {
+  bucket = aws_s3_bucket.mongo_backups.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
 # Define the S3 bucket policy to allow public read access
 resource "aws_s3_bucket_policy" "public_read_policy" {
   bucket = aws_s3_bucket.db_backups.id
@@ -69,6 +78,10 @@ resource "aws_s3_bucket_policy" "public_read_policy" {
       }
     ]
   })
+
+  depends_on = [
+    aws_s3_bucket_public_access_block.mongo_backups
+  ]
 }
 
 # Define the S3 bucket public access block
