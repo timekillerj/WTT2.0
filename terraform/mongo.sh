@@ -43,7 +43,7 @@ HOST=localhost
 # DB name
 DBNAME=db
 # S3 bucket name
-BUCKET=techtask-readable-mongo-backups
+BUCKET=techtask-public-mongo-backups
 # MongoDB admin credentials
 MONGO_USER=admin
 MONGO_PASSWORD=adminpassword
@@ -78,7 +78,7 @@ use backups
 db.backup_records.insertOne({
   backup_name: "${TIMESTAMP}.tar",
   s3_path: "s3://${BUCKET}/${TIMESTAMP}.tar",
-  url: "https://techtask-readable-mongo-backups.s3.amazonaws.com/${TIMESTAMP}.tar",
+  url: "https://${BUCKET}.s3.amazonaws.com/${TIMESTAMP}.tar",
   size: ${SIZE},
   backup_date: new Date("${ISO_TIMESTAMP}")
 })
