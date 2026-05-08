@@ -11,6 +11,10 @@ on:
       - "tornado-webapp-helm/**"
       - ".github/workflows/deploy-webapp.yml"
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: tornado-webapp
