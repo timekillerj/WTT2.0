@@ -1,23 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
-# Filter out local zones, which are not currently supported 
-# with managed node groups
-data "aws_availability_zones" "available" {
-  filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
-  }
-}
-
-locals {
-  cluster_name   = var.eks_cluster_name
-  instance_type  = "t3.small"
-  s3_bucket_name = var.s3_bucket_name
-
-}
-
 # Define the S3 bucket
 resource "aws_s3_bucket" "db_backups" {
   bucket = var.s3_bucket_name
@@ -73,8 +53,3 @@ resource "aws_s3_bucket_public_access_block" "mongo_public_access_block" {
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
-
-resource "aws_ecr_repository" "tornado_webapp" {
-  name = "tornado-webapp"
-}
-

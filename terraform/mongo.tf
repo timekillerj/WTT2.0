@@ -100,7 +100,7 @@ resource "aws_instance" "mongo-server" {
   iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
   key_name               = "wiz-task"
 
-  user_data              = file("mongo.sh")
+  user_data              = file("${path.module}/scripts/mongo.sh")
 
   tags = {
     Name = "MongoServer"
