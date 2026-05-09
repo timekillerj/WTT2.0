@@ -67,22 +67,16 @@ The infrastructure is deployed using **Terraform** and the application is deploy
 
 ### Terraform Cloud
 
-Workspace in Terraform Cloud automatically runs `terraform plan` on commit to main. Applying the changes currently requires a manual click, kbut could be automated.
-
+Push to main branch triggers `terraform plan` in Terraform Cloud. Changes to `/terraform` also triggers a Github action to run a Chekov code check. Currently failures do not prevent deployment.
 
 ### CI/CD
 
-Push to main branch:
+Changes pushed to tornado-webapp or tornado-webapp-helm triggers Github action to:
 
-```
-git push origin main
-```
-
-Github Actions used to:
 * Build webapp image
+* Scan with Trivy
 * Push to Amazon ECR
 * Deploy to EKS Cluster
-
 
 ---
 
