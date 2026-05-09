@@ -77,10 +77,10 @@ resource "aws_security_group" "mongodb_access" {
   vpc_id = module.vpc.vpc_id  # Reference the VPC ID from the VPC module
 
   ingress {
-    from_port                = 27017
-    to_port                  = 27017
-    protocol                 = "tcp"
-    source_security_group_id = module.eks.node_security_group_id
+    from_port       = 27017
+    to_port         = 27017
+    protocol        = "tcp"
+    security_groups = [module.eks.node_security_group_id]
   }
 
   egress {
