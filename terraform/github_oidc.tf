@@ -94,6 +94,10 @@ resource "aws_eks_access_entry" "github" {
   cluster_name  = var.eks_cluster_name
   principal_arn = aws_iam_role.github_actions.arn
   type          = "STANDARD"
+
+  depends_on = [
+    module.eks
+  ]
 }
 
 resource "aws_eks_access_policy_association" "github_admin" {
@@ -104,4 +108,9 @@ resource "aws_eks_access_policy_association" "github_admin" {
   access_scope {
     type = "cluster"
   }
+
+  depends_on = [
+    module.eks,
+    aws_eks_access_entry.github
+  ]
 }
