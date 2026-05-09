@@ -106,13 +106,13 @@ terraform destroy
 
 ---
 
-## Security Controls (Recommended Improvements)
+# Security Controls (Recommended Improvements)
 
 While this environment is intentionally insecure for demonstration purposes, the following controls could be implemented to significantly improve security posture. These controls are grouped across cloud, infrastructure, and code layers.
 
 ---
 
-### ☁️ Cloud-Level Controls
+## ☁️ Cloud-Level Controls
 
 **1. CloudTrail (Audit Logging)**
 - Enable AWS CloudTrail across all regions
@@ -137,7 +137,7 @@ While this environment is intentionally insecure for demonstration purposes, the
 
 ---
 
-### 🏗️ Infrastructure-Level Controls
+## 🏗️ Infrastructure-Level Controls
 
 **1. Terraform Security Scanning**
 - Use Checkov to scan IaC before deployment
@@ -158,7 +158,7 @@ While this environment is intentionally insecure for demonstration purposes, the
 
 ---
 
-### 💻 Code & Pipeline Security Controls
+## 💻 Code & Pipeline Security Controls
 
 **1. Repository Protection (GitHub)**
 - Prevent direct pushes to `main`
@@ -187,7 +187,7 @@ While this environment is intentionally insecure for demonstration purposes, the
 
 ---
 
-### 🔐 Security Outcome
+## 🔐 Security Outcome
 
 By implementing these controls:
 
@@ -198,7 +198,7 @@ By implementing these controls:
 
 ---
 
-### 🧠 Summary
+## 🧠 Summary
 
 This layered approach demonstrates how security can be enforced across:
 - **Cloud (visibility and auditing)**
