@@ -6,8 +6,8 @@ mongoSecret:
   mongoPass: ""
 
 image:
-  repository: "039612851322.dkr.ecr.us-east-1.amazonaws.com/tornado-webapp"
-  tag: "latest"
+  repository: ""
+  tag: ""
   pullPolicy: IfNotPresent
 
 service:

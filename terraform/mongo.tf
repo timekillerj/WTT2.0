@@ -72,15 +72,16 @@ resource "aws_security_group" "ssh_access" {
 # Define the security group for MongoDB access
 resource "aws_security_group" "mongodb_access" {
   name        = "mongodb_access"
-  description = "Allow MongoDB access from within the VPC"
+  description = "Allow MongoDB access only from EKS worker nodes"
 
   vpc_id = module.vpc.vpc_id  # Reference the VPC ID from the VPC module
 
   ingress {
-    from_port   = 27017
-    to_port     = 27017
-    protocol    = "tcp"
-    cidr_blocks = [module.vpc.vpc_cidr_block]  # Allow traffic only from within the VPC
+    from_port                = 27017
+    to_port                  = 27017
+    protocol                 = "tcp"
+    security_group_id        = aws_security_group.mongo_sg.id
+    source_security_group_id = module.eks.node_security_group_id
   }
 
   egress {
