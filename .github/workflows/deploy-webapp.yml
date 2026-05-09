@@ -70,11 +70,10 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           helm upgrade --install $HELM_RELEASE $HELM_CHART_PATH \
-            --namespace $K8S_NAMESPACE \
-            --create-namespace \
             --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY \
             --set image.tag=$IMAGE_TAG \
             --set mongoSecret.mongoHost=$MONGOHOST \
             --set mongoSecret.mongoUser=$MONGOUSER \
             --set mongoSecret.mongoPass=$MONGOPASS \
+            --set namespace=$K8S_NAMESPACE
 
