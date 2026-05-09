@@ -7,6 +7,7 @@ resource "aws_s3_bucket" "db_backups" {
   }
 }
 
+# Turn off safety controls
 resource "aws_s3_bucket_public_access_block" "mongo_backups" {
   bucket = aws_s3_bucket.db_backups.id
 

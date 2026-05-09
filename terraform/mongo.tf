@@ -93,12 +93,12 @@ resource "aws_security_group" "mongodb_access" {
 
 # Define the EC2 instance
 resource "aws_instance" "mongo-server" {
-  ami                    = "ami-04a81a99f5ec58529"
-  instance_type          = "t2.micro"
+  ami                    = var.mongo_ami_id
+  instance_type          = var.mongo_instance_type
   subnet_id              = module.vpc.public_subnets[0] # Reference the first public subnet ID from the VPC module
   vpc_security_group_ids = [aws_security_group.ssh_access.id, aws_security_group.mongodb_access.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
-  key_name               = "wiz-task"
+  key_name               = var.mongo_key_pair
 
   user_data = file("${path.module}/scripts/mongo.sh")
 

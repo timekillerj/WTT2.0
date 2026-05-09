@@ -21,3 +21,15 @@ variable "eks_cluster_name" {
 variable "node_group_instance_type" {
   default = "t3.small"
 }
+
+variable "mongo_ami_id" {
+  default = "ami-04a81a99f5ec58529"
+}
+
+variable "mongo_instance_type" {
+  default = "t2.micro"
+}
+
+variable "mongo_key_pair" {
+  default = "wiz-task"
+}

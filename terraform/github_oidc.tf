@@ -1,3 +1,4 @@
+# This file creates the OIDC authentication so github can push images to ECR
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
@@ -10,6 +11,7 @@ resource "aws_iam_openid_connect_provider" "github" {
   ]
 }
 
+# Create role
 resource "aws_iam_role" "github_actions" {
   name = "github-actions-deploy-role"
 
@@ -35,6 +37,7 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
+# Create ECR policy
 resource "aws_iam_policy" "ecr_push" {
   name = "github-actions-ecr"
 
@@ -63,6 +66,7 @@ resource "aws_iam_policy" "ecr_push" {
   })
 }
 
+# Create EKS policy
 resource "aws_iam_policy" "eks_access" {
   name = "github-actions-eks"
 
@@ -80,16 +84,19 @@ resource "aws_iam_policy" "eks_access" {
   })
 }
 
+# Attach ECR policy to role
 resource "aws_iam_role_policy_attachment" "ecr" {
   role       = aws_iam_role.github_actions.name
   policy_arn = aws_iam_policy.ecr_push.arn
 }
 
+# Attach EKS policy to role
 resource "aws_iam_role_policy_attachment" "eks" {
   role       = aws_iam_role.github_actions.name
   policy_arn = aws_iam_policy.eks_access.arn
 }
 
+# Allow role to auth the cluster
 resource "aws_eks_access_entry" "github" {
   cluster_name  = module.eks.cluster_name
   principal_arn = aws_iam_role.github_actions.arn
@@ -100,6 +107,7 @@ resource "aws_eks_access_entry" "github" {
   ]
 }
 
+# Grant cluster admin to role
 resource "aws_eks_access_policy_association" "github_admin" {
   cluster_name  = module.eks.cluster_name
   principal_arn = aws_iam_role.github_actions.arn
