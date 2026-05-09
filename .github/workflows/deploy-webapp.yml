@@ -61,6 +61,7 @@ jobs:
         with:
           image-ref: ${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
           format: table
+          output: trivy-results.txt
           severity: HIGH,CRITICAL
           exit-code: 0
 
