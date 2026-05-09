@@ -4,17 +4,22 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <h1>{{ message }}</h1>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div>
+            <h1>{{ message }}</h1>
 
-    <p>This is a dynamically rendered page using Jinja.</p>
-    <p>Running on: {{ hostname }}</p>
+            <p>This is a dynamically rendered page using Jinja.</p>
+            <p>Running on: {{ hostname }}</p>
 
-    <div>
-        <img src="/static/wizexercise.gif">
+            <div>
+                <img src="/static/wizexercise.gif">
+            </div>
+
+            <ul>
+                <li><a href="/backups">View Backups</a></li>
+                <li><a href="/static/wizexercise.txt">View wizexercise.txt</a></li>
+            </ul>
+        </div>
     </div>
-
-    <ul>
-        <li><a href="/backups">View Backups</a></li>
-    </ul>
 </body>
 </html>
