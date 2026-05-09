@@ -35,7 +35,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
         html = template.render(
             title="Wiz Tech Task",
-            message="My Super cool Tornado Webapp",
+            message="My Super Cool Tornado Webapp",
             hostname=os.uname().nodename
         )
 
