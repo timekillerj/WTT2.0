@@ -7,7 +7,3 @@ data "aws_availability_zones" "available" {
   }
 }
 
-resource "aws_ecr_repository" "tornado_webapp" {
-  name = "tornado-webapp"
-}
-
