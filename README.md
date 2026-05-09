@@ -61,10 +61,6 @@ The infrastructure is deployed using **Terraform** and the application is deploy
 ### 5. Kubernetes Admin Privileges
 - App bound to `cluster-admin`
 
-### 6. MongoDB Network + Auth Controls
-- Only accessible from EKS nodes (security group)
-- Requires username/password
-
 ---
 
 ## Deployment
