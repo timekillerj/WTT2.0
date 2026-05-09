@@ -61,16 +61,9 @@ jobs:
         with:
           image-ref: ${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
           format: table
-          output: trivy-results.txt
           severity: HIGH,CRITICAL
           exit-code: 0
 
-      - name: Upload Trivy results
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-results
-          path: trivy-results.txt
-      
       - name: Configure kubectl
         run: |
           aws eks update-kubeconfig \
