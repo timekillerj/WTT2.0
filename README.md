@@ -8,23 +8,13 @@ The infrastructure is deployed using **Terraform** and the application is deploy
 
 ---
 
-## Architecture
+## Runtime Architecture
 
-```
-Internet
-   ↓
-AWS Application Load Balancer (via Ingress)
-   ↓
-Kubernetes Ingress
-   ↓
-Service (ClusterIP)
-   ↓
-Tornado Web Application (Pod)
-   ↓
-MongoDB (EC2 Instance)
-   ↓
-S3 (Public Backups)
-```
+![Runtime Architecture](./docs/runtime-architecture.png)
+
+## CI/CD Pipeline
+
+![CI/CD Pipeline Architecture](./docs/cicd-pipeline.png)
 
 ---
 
@@ -79,12 +69,10 @@ S3 (Public Backups)
 
 ## Deployment
 
-### Terraform
+### Terraform Cloud
 
-```
-terraform init
-terraform apply
-```
+Workspace in Terraform Cloud automatically runs `terraform plan` on commit to main. Applying the changes currently requires a manual click, kbut could be automated.
+
 
 ### CI/CD
 
@@ -93,6 +81,12 @@ Push to main branch:
 ```
 git push origin main
 ```
+
+Github Actions used to:
+* Build webapp image
+* Push to Amazon ECR
+* Deploy to EKS Cluster
+
 
 ---
 
@@ -122,6 +116,103 @@ terraform destroy
 
 ---
 
-## Notes
+## Security Controls (Recommended Improvements)
 
-This environment is intentionally insecure and should **not** be used in production.
+While this environment is intentionally insecure for demonstration purposes, the following controls could be implemented to significantly improve security posture. These controls are grouped across cloud, infrastructure, and code layers.
+
+---
+
+### ☁️ Cloud-Level Controls
+
+**1. CloudTrail (Audit Logging)**
+- Enable AWS CloudTrail across all regions
+- Capture all control plane API activity
+- Store logs in S3 for long-term retention
+- Optional: integrate with CloudWatch for real-time alerting
+
+**2. CloudWatch (Monitoring & Alerting)**
+- Monitor:
+  - Unauthorized API calls
+  - Security group changes
+  - IAM role modifications
+- Create alerts for suspicious behavior
+
+**3. AWS Config (Compliance & Drift Detection)**
+- Track configuration changes across resources
+- Detect:
+  - Public S3 buckets
+  - Overly permissive IAM roles
+  - Open security groups
+- Enforce compliance policies
+
+---
+
+### 🏗️ Infrastructure-Level Controls
+
+**1. Terraform Security Scanning**
+- Use Checkov to scan IaC before deployment
+- Detect misconfigurations such as:
+  - Public S3 access
+  - Overly permissive IAM policies
+  - Open network access
+
+**2. Deployment Gating**
+- Terraform Cloud runs are gated behind CI checks
+- Infrastructure is only deployed when:
+  - Code passes security scans
+  - Changes are approved and merged
+
+**3. Least Privilege IAM**
+- Replace overly permissive roles with scoped policies
+- Limit access to only required services and actions
+
+---
+
+### 💻 Code & Pipeline Security Controls
+
+**1. Repository Protection (GitHub)**
+- Prevent direct pushes to `main`
+- Require pull requests for all changes
+- Require at least one reviewer approval
+- Enforce status checks before merge
+
+**2. Secret Scanning & Dependency Monitoring**
+- Enable GitHub secret scanning
+- Enable Dependabot alerts and updates
+
+**3. Container Image Scanning**
+- Use Trivy to scan images for vulnerabilities
+- Identify:
+  - Outdated packages
+  - Known CVEs
+- Results stored as pipeline artifacts
+
+**4. CI/CD Security Enforcement**
+- Pipeline enforces:
+  - Checkov (IaC scanning)
+  - Trivy (container scanning)
+- Terraform Cloud plan/apply only occurs after:
+  - Security scans pass
+  - Code is reviewed and approved
+
+---
+
+### 🔐 Security Outcome
+
+By implementing these controls:
+
+- Unauthorized infrastructure changes are logged and traceable
+- Misconfigurations are detected before deployment
+- Vulnerable container images are identified early
+- Only reviewed and compliant code reaches production
+
+---
+
+### 🧠 Summary
+
+This layered approach demonstrates how security can be enforced across:
+- **Cloud (visibility and auditing)**
+- **Infrastructure (policy and configuration)**
+- **Code and pipeline (preventative controls)**
+
+In a production environment, these controls would work together to significantly reduce risk and improve overall security posture.
