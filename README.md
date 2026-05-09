@@ -1,4 +1,4 @@
-# Wiz Tech Task – Cloud Security Demo Environment
+# Tech Task – Cloud Security Demo Environment
 
 ## Overview
 
