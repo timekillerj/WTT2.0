@@ -1,6 +1,6 @@
 resource "aws_iam_policy" "alb_controller" {
   name   = "AWSLoadBalancerControllerIAMPolicy"
-  policy = file("iam_policy.json")
+  policy = file("alb_controller_iam_policy.json")
 }
 
 data "aws_iam_policy_document" "alb_assume_role" {
