@@ -53,11 +53,11 @@ resource "aws_eks_access_policy_association" "local_admin" {
 data "aws_iam_policy_document" "ecr_policy" {
   statement {
     actions = [
-                "ecr:BatchCheckLayerAvailability",
-                "ecr:BatchGetImage",
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:GetAuthorizationToken"
-            ]
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetAuthorizationToken"
+    ]
     resources = ["*"]
   }
 }

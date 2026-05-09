@@ -10,7 +10,7 @@ output "cluster_security_group_id" {
 
 output "region" {
   description = "AWS region"
-  value       = var.region
+  value       = var.aws_region
 }
 
 output "cluster_name" {
@@ -31,7 +31,7 @@ output "s3_bucket_url" {
 }
 
 output "ecr_repo_arn" {
-  value       = aws_ecr_repository.tornado_webapp.arn
+  value = aws_ecr_repository.tornado_webapp.arn
 }
 
 output "ecr_repository_url" {

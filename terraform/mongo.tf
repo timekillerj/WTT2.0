@@ -52,13 +52,13 @@ resource "aws_security_group" "ssh_access" {
   name        = "ssh_access"
   description = "Allow SSH access from the internet"
 
-  vpc_id = module.vpc.vpc_id  # Reference the VPC ID from the VPC module
+  vpc_id = module.vpc.vpc_id # Reference the VPC ID from the VPC module
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Allow SSH access from any IPv4 address
+    cidr_blocks = ["0.0.0.0/0"] # Allow SSH access from any IPv4 address
   }
 
   egress {
@@ -74,7 +74,7 @@ resource "aws_security_group" "mongodb_access" {
   name        = "mongodb_access"
   description = "Allow MongoDB access only from EKS worker nodes"
 
-  vpc_id = module.vpc.vpc_id  # Reference the VPC ID from the VPC module
+  vpc_id = module.vpc.vpc_id # Reference the VPC ID from the VPC module
 
   ingress {
     from_port       = 27017
@@ -95,12 +95,12 @@ resource "aws_security_group" "mongodb_access" {
 resource "aws_instance" "mongo-server" {
   ami                    = "ami-04a81a99f5ec58529"
   instance_type          = "t2.micro"
-  subnet_id              = module.vpc.public_subnets[0]  # Reference the first public subnet ID from the VPC module
+  subnet_id              = module.vpc.public_subnets[0] # Reference the first public subnet ID from the VPC module
   vpc_security_group_ids = [aws_security_group.ssh_access.id, aws_security_group.mongodb_access.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
   key_name               = "wiz-task"
 
-  user_data              = file("${path.module}/scripts/mongo.sh")
+  user_data = file("${path.module}/scripts/mongo.sh")
 
   tags = {
     Name = "MongoServer"
