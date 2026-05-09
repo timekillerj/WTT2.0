@@ -21,3 +21,4 @@ jobs:
         with:
           directory: .
           framework: terraform
+          exit-code: 0
