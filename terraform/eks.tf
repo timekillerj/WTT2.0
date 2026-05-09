@@ -2,7 +2,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "20.8.5"
 
-  cluster_name    = local.cluster_name
+  cluster_name    = var.eks_cluster_name
   cluster_version = "1.29"
 
   cluster_endpoint_public_access           = true
@@ -24,7 +24,7 @@ module "eks" {
   eks_managed_node_groups = {
     default = {
       name           = "node-group-1"
-      instance_types = [local.instance_type]
+      instance_types = [var.node_group_instance_type]
       min_size       = 1
       max_size       = 1
       desired_size   = 1
@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "ecr_policy" {
 
 # Create the IAM policy for ECR access
 resource "aws_iam_policy" "ecr_policy" {
-  name   = "${local.cluster_name}-ecr-policy"
+  name   = "${var.eks_cluster_name}-ecr-policy"
   policy = data.aws_iam_policy_document.ecr_policy.json
 }
 

@@ -23,3 +23,7 @@ variable "aws_region" {
 variable "eks_cluster_name" {
   default = "wiz-task-eks"
 }
+
+variable "node_group_instance_type" {
+  default = "t3.small"
+}
