@@ -6,10 +6,28 @@ import motor.motor_tornado
 from tornado.escape import json_encode
 from bson import ObjectId
 import datetime
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 logging.basicConfig(level=logging.DEBUG)
 
-class MainHandler(tornado.web.RequestHandler):
+template_env = Environment(
+    loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")),
+    autoescape=select_autoescape(["html", "xml"])
+)
+
+class IndexHandler(tornado.web.RequestHandler):
+    async def get(self):
+        template = template_env.get_template("index.html")
+
+        html = template.render(
+            title="Wiz Tech Task",
+            message="Welcome to the Tornado WebApp",
+            hostname=os.uname().nodename
+        )
+
+        self.write(html)
+
+class BackupsHandler(tornado.web.RequestHandler):
     async def get(self):
         # Retrieve MongoDB connection details from environment variables
         mongo_host = os.getenv('MONGO_HOST', 'localhost')
@@ -46,7 +64,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 def make_app():
     return tornado.web.Application([
-        (r"/backups", MainHandler),
+        (r"/", IndexHandler),
+        (r"/backups", BackupsHandler),
         (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": "static"}),
     ])
 

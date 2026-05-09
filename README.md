@@ -61,8 +61,9 @@ S3 (Public Backups)
 - Demonstrates data exposure
 
 ### 3. Outdated OS / Software
-- Old Linux AMI
-- Outdated MongoDB
+- Old Linux AMI (Running Ubuntu 24.04)
+- Outdated MongoDB version (7.0)
+- Unsupported Kubernetes version (1.29)
 
 ### 4. SSH Open to Internet
 - `0.0.0.0/0` access on port 22
