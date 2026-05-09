@@ -22,7 +22,7 @@ env:
   HELM_RELEASE: tornado-webapp
   HELM_CHART_PATH: ./tornado-webapp-helm
   K8S_NAMESPACE: wiz-task
-  MONGOHOST: "aXAtMTAtMC0yLTg5LmVjMi5pbnRlcm5hbAo="
+  MONGOHOST: "aXAtMTAtMC0yLTg5LmVjMi5pbnRlcm5hbA=="
   MONGOUSER: "YWRtaW4="
   MONGOPASS: "YWRtaW5wYXNzd29yZA=="
 
