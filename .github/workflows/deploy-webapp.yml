@@ -22,8 +22,8 @@ env:
   HELM_RELEASE: tornado-webapp
   HELM_CHART_PATH: ./tornado-webapp-helm
   K8S_NAMESPACE: wiz-task
-  MOGOHOST: "aXAtMTAtMC0yLTE3Ny5lYzIuaW50ZXJuYWw="
-  MOGOUSER: "YWRtaW4="
+  MONGOHOST: "aXAtMTAtMC0yLTE3Ny5lYzIuaW50ZXJuYWw="
+  MONGOUSER: "YWRtaW4="
   MONGOPASS: "YWRtaW5wYXNzd29yZA=="
 
 
@@ -73,8 +73,8 @@ jobs:
             --namespace $K8S_NAMESPACE \
             --create-namespace \
             --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY \
-            --set image.tag=$IMAGE_TAG
-            --set mongoSecret.mongoHost: $MONGOHOST
-            --set mongoSecret.mongoUser: $MONGOUSER
-            --set mongoSecret.mongoPass: $MONGOPASS
+            --set image.tag=$IMAGE_TAG \
+            --set mongoSecret.mongoHost=$MONGOHOST \
+            --set mongoSecret.mongoUser=$MONGOUSER \
+            --set mongoSecret.mongoPass=$MONGOPASS \
 
