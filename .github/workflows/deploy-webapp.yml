@@ -21,7 +21,6 @@ env:
   EKS_CLUSTER_NAME: wiz-task-eks
   HELM_RELEASE: tornado-webapp
   HELM_CHART_PATH: ./tornado-webapp-helm
-  K8S_NAMESPACE: wiz-task
   MONGOHOST: "aXAtMTAtMC0yLTE3Ny5lYzIuaW50ZXJuYWw="
   MONGOUSER: "YWRtaW4="
   MONGOPASS: "YWRtaW5wYXNzd29yZA=="
@@ -70,9 +69,9 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           helm upgrade --install $HELM_RELEASE $HELM_CHART_PATH \
+            --namespace wiz-task --create-namespace
             --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY \
             --set image.tag=$IMAGE_TAG \
-            --set namespace=$K8S_NAMESPACE \
             --set mongoSecret.mongoHost=$MONGOHOST \
             --set mongoSecret.mongoUser=$MONGOUSER \
             --set mongoSecret.mongoPass=$MONGOPASS
