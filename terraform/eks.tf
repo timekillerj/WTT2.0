@@ -32,6 +32,23 @@ module "eks" {
   }
 }
 
+# Grant my user access to EKS cluster
+resource "aws_eks_access_entry" "local_admin" {
+  cluster_name  = module.eks.cluster_name
+  principal_arn = "arn:aws:iam::039612851322:user/odl_user_2214047"
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "local_admin" {
+  cluster_name  = module.eks.cluster_name
+  principal_arn = aws_eks_access_entry.local_admin.principal_arn
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
+}
+
 # IAM policy to allow EKS nodes to pull images from ECR
 data "aws_iam_policy_document" "ecr_policy" {
   statement {
