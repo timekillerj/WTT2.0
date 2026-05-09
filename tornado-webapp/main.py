@@ -15,13 +15,27 @@ template_env = Environment(
     autoescape=select_autoescape(["html", "xml"])
 )
 
+# Retrieve MongoDB connection details from environment variables
+mongo_host = os.getenv('MONGO_HOST', 'localhost')
+mongo_user = os.getenv('MONGO_USER', 'admin')
+mongo_pass = os.getenv('MONGO_PASS', 'password')
+
+# MongoDB connection string
+connection_string = f'mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:27017'
+logging.debug(f'Connection: {connection_string}')
+
+# MongoDB connection
+client = motor.motor_tornado.MotorClient(connection_string)
+db = client.backups
+
+
 class IndexHandler(tornado.web.RequestHandler):
     async def get(self):
         template = template_env.get_template("index.html")
 
         html = template.render(
             title="Wiz Tech Task",
-            message="Welcome to the Tornado WebApp",
+            message="My Super cool Tornado Webapp",
             hostname=os.uname().nodename
         )
 
@@ -29,21 +43,8 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class BackupsHandler(tornado.web.RequestHandler):
     async def get(self):
-        # Retrieve MongoDB connection details from environment variables
-        mongo_host = os.getenv('MONGO_HOST', 'localhost')
-        mongo_user = os.getenv('MONGO_USER', 'admin')
-        mongo_pass = os.getenv('MONGO_PASS', 'password')
-
-        # MongoDB connection string
-        connection_string = f'mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:27017'
-        logging.debug(f'Connection: {connection_string}')
-
-        # MongoDB connection
-        client = motor.motor_tornado.MotorClient(connection_string)
-        db = client.backups
-        collection = db.backup_records
-        
         # Perform the MongoDB query
+        collection = db.backup_records
         cursor = collection.find({})
         documents = await cursor.to_list(length=None)
         
