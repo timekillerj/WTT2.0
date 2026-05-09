@@ -104,9 +104,18 @@ kubectl get all -n wiz-task
 
 ## Teardown
 
-```
-terraform destroy
-```
+* Delete all objects from S3 Bucket with `aws s3 rm s3://techtask-public-mongo-backups --recursive`
+* Delete all images from ECR Repository with 
+  ```
+  aws ecr batch-delete-image \
+  --repository-name tornado-webapp \
+  --image-ids "$(aws ecr list-images \
+    --repository-name tornado-webapp \
+    --query 'imageIds[*]' \
+    --output json)"
+  ```
+* Remove Web Application with `helm uninstall tornado-webapp -n wiz-task`
+* Tear down infrastructure with Terraform Cloud 'destroy' plan
 
 ---
 
