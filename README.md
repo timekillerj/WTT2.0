@@ -42,8 +42,9 @@ The infrastructure is deployed using **Terraform** and the application is deploy
 
 ## Security Misconfigurations (Intentional)
 
-### 1. Overly Permissive IAM Role
+### 1. Overly Permissive IAM Roles
 - EC2 instance has broad permissions (`ec2:*`, `iam:*`, `s3:*`)
+- Terraform Cloud role has AdministratorAccess policy attached
 - Demonstrates privilege escalation risk
 
 ### 2. Public S3 Bucket
@@ -60,6 +61,9 @@ The infrastructure is deployed using **Terraform** and the application is deploy
 
 ### 5. Kubernetes Admin Privileges
 - App bound to `cluster-admin`
+
+### 6. Secrets Stored in Github Repo
+- Github action contains Mongo credentials base64 encoded
 
 ---
 
@@ -134,6 +138,10 @@ While this environment is intentionally insecure for demonstration purposes, the
   - Overly permissive IAM roles
   - Open security groups
 - Enforce compliance policies
+
+**4. AWS Security Hub Config (Cloud Security Posture Management)**
+- Security posture management and alert aggregation.
+- Consolidated security findings from multiple AWS services and partners.
 
 ---
 
