@@ -21,7 +21,7 @@ env:
   EKS_CLUSTER_NAME: wiz-task-eks
   HELM_RELEASE: tornado-webapp
   HELM_CHART_PATH: ./tornado-webapp-helm
-  MONGOHOST: "aXAtMTAtMC0yLTE3Ny5lYzIuaW50ZXJuYWw="
+  MONGOHOST: "aXAtMTAtMC0yLTE5NS5lYzIuaW50ZXJuYWw="
   MONGOUSER: "YWRtaW4="
   MONGOPASS: "YWRtaW5wYXNzd29yZA=="
 
