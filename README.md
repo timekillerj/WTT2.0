@@ -54,7 +54,7 @@ The infrastructure is deployed using **Terraform** and the application is deploy
 ### 3. Outdated OS / Software
 - Old Linux AMI (Running Ubuntu 24.04)
 - Outdated MongoDB version (7.0)
-- Unsupported Kubernetes version (1.29)
+- Unsupported Kubernetes version (1.30)
 
 ### 4. SSH Open to Internet
 - `0.0.0.0/0` access on port 22

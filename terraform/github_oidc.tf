@@ -1,4 +1,4 @@
-# This file creates the OIDC authentication so github can push images to ECR
+# This file creates the OIDC authentication so github can push images to ECR and deploy to the EKS cluster
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
