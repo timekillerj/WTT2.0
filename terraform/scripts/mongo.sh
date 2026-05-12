@@ -89,5 +89,5 @@ EOF
 sudo chmod +x /usr/local/bin/mongo_backup.sh
 
 # Add cron job to run backup script every day
-echo "0 1 * * * /bin/bash /usr/local/bin/mongo_backup.sh" >> /var/spool/cron/crontabs/root
+echo "0 1 * * * /bin/bash /usr/local/bin/mongo_backup.sh >> /var/log/mongo_backup.log 2>&1" >> /var/spool/cron/crontabs/root
 EOF
