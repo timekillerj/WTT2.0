@@ -157,8 +157,8 @@ While this environment is intentionally insecure for demonstration purposes, the
 ## 🏗️ Infrastructure-Level Controls
 
 **1. Terraform Security Scanning**
-- Use Checkov to scan IaC before deployment
-- Detect misconfigurations such as:
+- Use Checkov to scan IaC before deployment (Implemented)
+- Detects misconfigurations such as:
   - Public S3 access
   - Overly permissive IAM policies
   - Open network access
@@ -177,22 +177,22 @@ While this environment is intentionally insecure for demonstration purposes, the
 
 ## 💻 Code & Pipeline Security Controls
 
-**1. Repository Protection (GitHub)**
+**1. Container Image Scanning**
+- Use Trivy to scan images for vulnerabilities (Implemented)
+- Identifies:
+  - Outdated packages
+  - Known CVEs
+- Results stored as pipeline artifacts
+
+**2. Repository Protection (GitHub)**
 - Prevent direct pushes to `main`
 - Require pull requests for all changes
 - Require at least one reviewer approval
 - Enforce status checks before merge
 
-**2. Secret Scanning & Dependency Monitoring**
+**3. Secret Scanning & Dependency Monitoring**
 - Enable GitHub secret scanning
 - Enable Dependabot alerts and updates
-
-**3. Container Image Scanning**
-- Use Trivy to scan images for vulnerabilities
-- Identify:
-  - Outdated packages
-  - Known CVEs
-- Results stored as pipeline artifacts
 
 **4. CI/CD Security Enforcement**
 - Pipeline enforces:
